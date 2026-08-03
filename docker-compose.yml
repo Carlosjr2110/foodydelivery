@@ -1,0 +1,25 @@
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8080:8080"
+    environment:
+      # Guarda o banco SQLite num volume nomeado, fora do container,
+      # para os dados sobreviverem a "docker compose down" / rebuilds
+      SPRING_DATASOURCE_URL: jdbc:sqlite:/app/data/delivery.db
+      # Troque essa chave em qualquer ambiente que não seja só local
+      APP_JWT_SECRET: c2VjcmV0LWtleS1kZWxpdmVyeS10cmFja2luZy1zeXN0ZW0tY2hhbmdlLW1lLXBsZWFzZQ==
+    volumes:
+      - backend-data:/app/data
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  backend-data:
