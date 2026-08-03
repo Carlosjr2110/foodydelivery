@@ -13,6 +13,10 @@ RUN mvn -q -B -DskipTests package
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 
+# Sem isso o container usa UTC (padrão da imagem), enquanto rodando localmente
+# o Java usa o fuso do próprio Windows — daí a diferença de horário nos pedidos
+ENV TZ=America/Sao_Paulo
+
 COPY --from=build /app/target/backend-0.0.1-SNAPSHOT.jar app.jar
 
 EXPOSE 8080

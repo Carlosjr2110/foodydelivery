@@ -114,10 +114,16 @@ mas os valores abaixo podem ser sobrescritos por variáveis de ambiente (é o qu
 | `SPRING_DATASOURCE_URL` | Caminho do arquivo do banco SQLite | `jdbc:sqlite:delivery.db` |
 | `APP_JWT_SECRET` | Chave usada para assinar os tokens JWT de login | valor de exemplo fixo no código |
 | `APP_JWT_EXPIRATION_MS` | Validade do token de login, em milissegundos | `86400000` (24h) |
+| `TZ` | Fuso horário usado pelo container (afeta os horários gravados nos pedidos) | `America/Sao_Paulo` |
 
 ⚠️ **Importante**: a chave JWT padrão é só um valor de exemplo para rodar local.
 Se algum dia isso for exposto fora da sua máquina, troque `APP_JWT_SECRET` por um
 valor próprio e secreto (o `docker-compose.yml` já tem o campo pronto para editar).
+
+🕐 **Fuso horário**: rodando sem Docker, o backend usa o fuso do próprio sistema
+operacional (por isso os horários batem certo). Dentro do container, a imagem
+base do Java usa UTC por padrão — por isso o `Dockerfile`/`docker-compose.yml`
+fixam `TZ=America/Sao_Paulo`. Se você estiver em outro fuso, troque esse valor.
 
 ---
 

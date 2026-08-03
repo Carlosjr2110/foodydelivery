@@ -9,6 +9,8 @@ services:
       SPRING_DATASOURCE_URL: jdbc:sqlite:/app/data/delivery.db
       # Troque essa chave em qualquer ambiente que não seja só local
       APP_JWT_SECRET: c2VjcmV0LWtleS1kZWxpdmVyeS10cmFja2luZy1zeXN0ZW0tY2hhbmdlLW1lLXBsZWFzZQ==
+      # Sem isso os horários dos pedidos ficam em UTC em vez do fuso local
+      TZ: America/Sao_Paulo
     volumes:
       - backend-data:/app/data
     restart: unless-stopped
